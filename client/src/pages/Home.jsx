@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import Benefits from "../components/Benefits";
 import SpecialOffers from "../components/Offers/SpecialOffers";
 import HomeCategory from "../components/HomeCategory/HomeCategory";
+import Latest from "../components/LatestGoods/Latest";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <Benefits />
       <SpecialOffers />
       <HomeCategory />
+      <Latest />
     </Layout>
   );
 };

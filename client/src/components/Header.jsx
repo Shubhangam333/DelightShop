@@ -6,14 +6,14 @@ import SideBarMenu from "./MegaMenu/SideBarMenu";
 
 const Header = () => {
   return (
-    <header className="font-medium">
+    <header className="font-medium ">
       <div className="bg-cyan-950 h-8 flex items-center justify-center ">
         <p className="text-gray-50 text-xs">
           <i class="fa-solid fa-truck p-2"></i>
           <span className="">Get free delivery on orders above 1000</span>
         </p>
       </div>
-      <div className="flex items-center justify-between p-4 sticky top-0 bg-white">
+      <div className="flex items-center justify-between p-4 fixed top-0 left-0 right-0 z-10  bg-white">
         <nav className="flex items-center justify-between gap-8">
           <h1 className="text-2xl text-cyan-950">
             Delight <span className="text-fuchsia-700">Shop</span>
