@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Open Sans", sans-serif;
+}
+.swiper-button-prev {
+  top: 0;
+  height: 100%;
+  width: 4rem;
+  color: fuchsia;
+}
+.swiper-button-prev:hover {
+  background-color: wheat;
+  opacity: 0.4;
+}
+.swiper-button-next {
+  top: 0;
+  height: 100%;
+  width: 4rem;
+  color: fuchsia;
+}
+.swiper-button-next:hover {
+  background-color: wheat;
+  opacity: 0.4;
+}
