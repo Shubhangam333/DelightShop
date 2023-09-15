@@ -66,10 +66,10 @@ const Header = () => {
             </Link>
           </div>
           <div className="hover:text-fuchsia-700 cursor-pointer">
-            <AiOutlineHeart className="text-lg" />
+            <AiOutlineHeart className="text-2xl" />
           </div>
           <div className="px-4 hover:text-fuchsia-700 cursor-pointer">
-            <AiOutlineShoppingCart className="text-lg" />
+            <AiOutlineShoppingCart className="text-2xl" />
           </div>
         </div>
       </div>
