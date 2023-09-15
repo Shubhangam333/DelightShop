@@ -8,8 +8,8 @@ import {
 
 const Footer = () => {
   return (
-    <footer>
-      <div className="border-y-2 border-y-slate-400  border-solid m-t-16 p-12 px-24 text-slate-700">
+    <footer className="my-16">
+      <div className="border-y-2 border-y-slate-400  border-solid p-12 px-24 text-slate-700">
         <div className="grid grid-cols-3 mx-24 gap-48 ">
           <div className="section flex flex-col gap-2 items-start">
             <p className="border-4 border-solid border-l-fuchsia-900 px-2 -mx-8">
@@ -45,15 +45,15 @@ const Footer = () => {
           <AiFillTwitterCircle />
           <AiFillMail />
         </div>
-        <form class="flex items-center flex-wrap sm:flex-nowrap mt-4 mx-32">
+        <form className="flex items-center flex-wrap sm:flex-nowrap mt-4 mx-32">
           <input
-            class=" w-72 py-3 px-4 outline-none rounded-lg sm:rounded-none ltr:sm:rounded-tl-lg ltr:sm:rounded-bl-lg rtl:sm:rounded-tr-lg rtl:sm:rounded-br-lg shadow-md sm:shadow-none focus:shadow-sm"
+            className=" w-72 py-3 px-4 outline-none rounded-lg sm:rounded-none ltr:sm:rounded-tl-lg ltr:sm:rounded-bl-lg rtl:sm:rounded-tr-lg rtl:sm:rounded-br-lg shadow-md sm:shadow-none focus:shadow-sm"
             type="email"
             placeholder="Please Enter Your Email"
             wfd-id="id12"
           />
           <button
-            class="outline-none py-3 px-4 w-full sm:w-auto mt-2 sm:mt-0 rounded-lg sm:rounded-none md:w-auto bg-red-600 text-neutral-200 text-palette-side rtl:sm:rounded-tl-lg rtl:sm:rounded-bl-lg ltr:sm:rounded-tr-lg ltr:sm:rounded-br-lg "
+            className="outline-none py-3 px-4 w-full sm:w-auto mt-2 sm:mt-0 rounded-lg sm:rounded-none md:w-auto bg-red-600 text-neutral-200 text-palette-side rtl:sm:rounded-tl-lg rtl:sm:rounded-bl-lg ltr:sm:rounded-tr-lg ltr:sm:rounded-br-lg "
             type="button"
           >
             Register
