@@ -8,7 +8,7 @@ const Register = () => {
     <div className="w-96">
       <h1 className="text-3xl text-slate-950 py-4">Register</h1>
       <Formik
-        initialValues={{ userName: "", email: "", password: "" }}
+        initialValues={{ userName: "", email: "", password: "", avatar: "" }}
         validationSchema={Yup.object({
           userName: Yup.string()
             .max(15, "Must be 15 characters or less")
@@ -20,6 +20,7 @@ const Register = () => {
             .required("Please enter a password")
             // check minimum characters
             .min(8, "Password must have at least 8 characters"),
+          avatar: Yup.string().required("Please upload profile picture"),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -35,6 +36,7 @@ const Register = () => {
           <Field
             name="userName"
             type="text"
+            id="userName"
             className="px-2 py-1 text-xl outline-2 border-2 border-slate-400 rounded-md focus:border-slate-700"
           />
 
@@ -44,6 +46,7 @@ const Register = () => {
           <Field
             name="email"
             type="email"
+            id="email"
             className="px-2 py-1 text-xl outline-2 border-2 border-slate-400 rounded-md focus:border-slate-700"
           />
           <label htmlFor="password" className="py-2">
@@ -52,11 +55,22 @@ const Register = () => {
           <Field
             name="password"
             type="password"
+            id="password"
+            className="px-2 py-1 text-xl outline-2 border-2 border-slate-400 rounded-md focus:border-slate-700"
+          />
+          <label htmlFor="avatar" className="py-2">
+            Profile Picture
+          </label>
+          <Field
+            name="avatar"
+            type="file"
+            id="avatar"
             className="px-2 py-1 text-xl outline-2 border-2 border-slate-400 rounded-md focus:border-slate-700"
           />
           <ErrorMessage name="email" />
           <ErrorMessage name="userName" />
           <ErrorMessage name="password" />
+          <ErrorMessage name="avatar" />
 
           <button
             type="submit"
@@ -66,7 +80,7 @@ const Register = () => {
           </button>
         </Form>
       </Formik>
-      <p className="flex gap-12">
+      <p className="flex justify-between">
         Already have an account?
         <Link to="/login" className="text-red-500 hover:underline">
           Log In

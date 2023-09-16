@@ -53,7 +53,7 @@ const Login = () => {
           </button>
         </Form>
       </Formik>
-      <p className="flex gap-8">
+      <p className="flex justify-between">
         Don't you have an account?{" "}
         <Link to="/register" className="text-red-500 hover:underline">
           Sign Up

@@ -40,11 +40,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: red;
+  background-color: #b91c1c;
   height: 20px;
   border-radius: 20px;
 }
 
 ::-webkit-scrollbar-track {
-  border: 2px solid black;
+  background-color: white;
 }
