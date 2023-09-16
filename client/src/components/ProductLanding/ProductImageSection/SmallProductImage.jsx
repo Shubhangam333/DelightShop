@@ -1,7 +1,7 @@
 import React from "react";
 
 const SmallProductImage = () => {
-  return <div>SmallProductImage</div>;
+  return <div></div>;
 };
 
 export default SmallProductImage;

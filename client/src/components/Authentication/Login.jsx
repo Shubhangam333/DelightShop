@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div>
+    <div className="w-96">
       <h1 className="text-3xl text-slate-950 py-4">Sign In to your account</h1>
       <Formik
         initialValues={{ email: "", password: "" }}

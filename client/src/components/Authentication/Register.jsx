@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
-    <div>
+    <div className="w-96">
       <h1 className="text-3xl text-slate-950 py-4">Register</h1>
       <Formik
         initialValues={{ userName: "", email: "", password: "" }}

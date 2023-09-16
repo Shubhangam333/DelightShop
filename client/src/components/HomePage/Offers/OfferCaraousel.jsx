@@ -9,7 +9,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ProductCard from "./ProductCard";
 
 const OfferCaraousel = () => {
