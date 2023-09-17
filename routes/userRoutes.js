@@ -8,23 +8,31 @@ import {
   login,
   register,
   unblockUser,
+  logout,
 } from "../controllers/userController.js";
 
 import { isAdmin, isAuthenticated } from "../middleware/authMiddleware.js";
+import {
+  validateLoginInput,
+  validateRegisterInput,
+} from "../middleware/validationMiddleware.js";
 
 const router = express.Router();
 
-router.post("/register", register);
-router.post("/login", login);
-router
-  .route("/user/:userId")
-  .get(isAuthenticated, getUserProfileDetails)
-  .get(isAuthenticated, isAdmin, getSingleUserDetails);
+router.post("/register", validateRegisterInput, register);
+router.post("/login", validateLoginInput, login);
+router.get("/logout", logout);
+router.route("/profile/me").get(isAuthenticated, getUserProfileDetails);
 
 /**
  * !Admin Routes
  */
-router.get("/getAllUsers", getAllUsers);
-router.put("/block-user", isAuthenticated, isAdmin, blockUser);
-router.put("/unblock-user", isAuthenticated, isAdmin, unblockUser);
-router.delete("/delete-user", isAuthenticated, isAdmin, deleteUser);
+router
+  .route("/user/:userId")
+  .get(isAuthenticated, isAdmin, getSingleUserDetails);
+router.get("/getAllUsers", isAuthenticated, isAdmin, getAllUsers);
+router.put("/block-user/:userId", isAuthenticated, isAdmin, blockUser);
+router.put("/unblock-user/:userId", isAuthenticated, isAdmin, unblockUser);
+router.delete("/delete-user/:userId", isAuthenticated, isAdmin, deleteUser);
+
+export default router;

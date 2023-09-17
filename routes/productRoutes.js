@@ -15,3 +15,5 @@ router.get("/product/:productId", isAuthenticated, isAdmin, getProductDetails);
 router.put("/product/:productId", isAuthenticated, isAdmin, updateProduct);
 router.delete("/product/:productId", isAuthenticated, isAdmin, deleteProduct);
 router.get("/getAllProducts", isAuthenticated, isAdmin, getAllProducts);
+
+export default router;

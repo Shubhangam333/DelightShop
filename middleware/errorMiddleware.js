@@ -1,5 +1,8 @@
-class ErrorMiddleware extends Error {
-  constructor(message) {
-    super(message);
-  }
-}
+import { StatusCodes } from "http-status-codes";
+const errorHandleMiddleware = (err, req, res, next) => {
+  const statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
+  const msg = err.message || "Something went wrong, Try Again Later";
+  res.status(statusCode).json({ msg });
+};
+
+export default errorHandleMiddleware;
