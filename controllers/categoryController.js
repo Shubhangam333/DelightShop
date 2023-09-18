@@ -4,6 +4,7 @@
 
 import { StatusCodes } from "http-status-codes";
 import { Category } from "../models/categoryModel.js";
+import { NotFoundError } from "../errors/customErrors.js";
 
 /**
  *
@@ -18,6 +19,7 @@ import { Category } from "../models/categoryModel.js";
 
 export const createCategory = async (req, res, next) => {
   const { name, description } = req.body;
+
   const category = await Category.create({
     name,
     description,
