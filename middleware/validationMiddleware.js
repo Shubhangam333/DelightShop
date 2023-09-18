@@ -81,3 +81,8 @@ export const validateCategoryInput = withValidationErrors([
 /**
  * ! Product Validation
  */
+
+export const validateProductInput = withValidationErrors([
+  body("name").notEmpty().withMessage("Product Name is required"),
+  body("description").notEmpty().withMessage("Product Name is required"),
+]);

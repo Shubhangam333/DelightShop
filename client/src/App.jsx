@@ -8,6 +8,8 @@ import ShoppingPage from "./pages/ShoppingPage";
 import ProductLandingPage from "./pages/ProductLandingPage";
 import CartPage from "./pages/CartPage";
 import ShippingPage from "./pages/ShippingPage";
+import ProfilePage from "./pages/ProfilePage";
+import AdminPage from "./pages/AdminPage";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
   {
     path: "/shipping",
     element: <ShippingPage />,
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
+  },
+  {
+    path: "/admin",
+    element: <AdminPage />,
   },
 ]);
 
