@@ -1,42 +1,84 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import { registerUserAsync } from "../../features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const [image, setImage] = useState([]);
+  // const [ImagePreview, setImagePreview] = useState("");
+
+  const aRef = useRef(null);
+
+  const { error } = useSelector((state) => state.auth);
+
+  //handle and convert it in base 64
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFileToBase(file);
+  };
+
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+  };
+
+  useEffect(() => {
+    toast.error(error);
+  }, [error, toast]);
+
   return (
     <div className="w-96">
       <h1 className="text-3xl text-slate-950 py-4">Register</h1>
       <Formik
-        initialValues={{ userName: "", email: "", password: "", avatar: "" }}
+        initialValues={{ name: "", email: "", password: "" }}
         validationSchema={Yup.object({
-          userName: Yup.string()
+          name: Yup.string()
             .max(15, "Must be 15 characters or less")
-            .required("Required"),
+            .required("Name is Required"),
           email: Yup.string()
             .email("Invalid email address")
-            .required("Required"),
+            .required("Email Address is Required"),
           password: Yup.string()
-            .required("Please enter a password")
+            .required("Password is requied")
             // check minimum characters
             .min(8, "Password must have at least 8 characters"),
-          avatar: Yup.string().required("Please upload profile picture"),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+        validateOnChange={false}
+        validateOnBlur={false}
+        onSubmit={(values, { resetForm }) => {
+          dispatch(
+            registerUserAsync({
+              name: values.name,
+              email: values.email,
+              password: values.password,
+              avatar: image,
+            })
+          )
+            .unwrap()
+            .then((res) => {
+              aRef.current.value = null;
+              resetForm();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }}
       >
         <Form className="flex flex-col justify-between ">
-          <label htmlFor="userName" className="py-2">
-            User Name
+          <label htmlFor="name" className="py-2">
+            Name
           </label>
           <Field
-            name="userName"
+            name="name"
             type="text"
-            id="userName"
+            id="name"
             className="px-2 py-1 text-xl outline-2 border-2 border-slate-400 rounded-md focus:border-slate-700"
           />
 
@@ -61,16 +103,30 @@ const Register = () => {
           <label htmlFor="avatar" className="py-2">
             Profile Picture
           </label>
-          <Field
+          {/* <img src={ImagePreview} alt="" /> */}
+          <input
+            ref={aRef}
             name="avatar"
             type="file"
             id="avatar"
+            onChange={handleImage}
             className="px-2 py-1 text-xl outline-2 border-2 border-slate-400 rounded-md focus:border-slate-700"
           />
-          <ErrorMessage name="email" />
-          <ErrorMessage name="userName" />
-          <ErrorMessage name="password" />
-          <ErrorMessage name="avatar" />
+          <ErrorMessage name="email">
+            {(msg) => {
+              toast.error(msg);
+            }}
+          </ErrorMessage>
+          <ErrorMessage name="name">
+            {(msg) => {
+              toast.error(msg);
+            }}
+          </ErrorMessage>
+          <ErrorMessage name="password">
+            {(msg) => {
+              toast.error(msg);
+            }}
+          </ErrorMessage>
 
           <button
             type="submit"

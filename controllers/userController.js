@@ -17,20 +17,16 @@ import { sendToken } from "../utils/sendToken.js";
 // !POST request
 
 export const register = async (req, res, next) => {
-  const { name, email, password, avatar } = req.body;
-  console.log(name, email, password, avatar);
+  const { name, email, password } = req.body;
 
+  if (!req.body.avatar) {
+    const data = {
+      avatar: process.env.DEFAULT_AVATAR,
+    };
+  }
   const data = {
-    avatar: process.env.DEFAULT_AVATAR,
+    avatar: req.body.avatar,
   };
-  // if (!req.body.avatar) {
-  //   const data = {
-  //     avatar: process.env.DEFAULT_AVATAR,
-  //   };
-  // }
-  // const data = {
-  //   avatar: req.body.avatar,
-  // };
 
   const myCloud = await cloudinary.uploader.upload(data.avatar, {
     folder: "avatars",
@@ -50,7 +46,7 @@ export const register = async (req, res, next) => {
 
   res
     .status(StatusCodes.CREATED)
-    .json({ message: "User Registration Successful", user });
+    .json({ message: "User Registration Successful" });
 };
 
 // * Login Controller

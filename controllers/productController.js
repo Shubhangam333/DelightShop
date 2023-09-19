@@ -3,7 +3,7 @@
  */
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../errors/customErrors.js";
-import { Product } from "../models/productModel";
+import { Product } from "../models/productModel.js";
 import { v2 as cloudinary } from "cloudinary";
 
 /**

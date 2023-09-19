@@ -10,6 +10,7 @@ import { v2 as cloudinary } from "cloudinary";
 import morgan from "morgan";
 import fileUpload from "express-fileupload";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 dotenv.config();
 
@@ -25,6 +26,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());
+
+app.use(cors({ credentials: true }));
 
 // cloudinary configuration
 

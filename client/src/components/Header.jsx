@@ -1,9 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineShoppingCart, AiOutlineHeart } from "react-icons/ai";
+import {
+  AiOutlineShoppingCart,
+  AiOutlineHeart,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { HiOutlineLogin } from "react-icons/hi";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
+
   return (
     <header className="font-medium ">
       <div className="bg-cyan-950 h-8 flex items-center justify-center ">
@@ -57,13 +64,25 @@ const Header = () => {
 
         <div className="flex items-center gap-8">
           <div>
-            <Link to="/login" className="cursor-pointer">
-              <div className="hover:text-fuchsia-700 flex items-center">
-                {" "}
-                <HiOutlineLogin className="text-lg" />
-                <p> Log In | Sign Up</p>
-              </div>
-            </Link>
+            {!isAuthenticated ? (
+              <Link to="/login" className="cursor-pointer">
+                <div className="hover:text-fuchsia-700 flex items-center">
+                  {" "}
+                  <HiOutlineLogin className="text-lg" />
+                  <p> Log In | Sign Up</p>
+                </div>
+              </Link>
+            ) : (
+              <Link to="/login" className="cursor-pointer">
+                <div className="hover:text-fuchsia-700 flex items-center">
+                  {" "}
+                  <p>
+                    {" "}
+                    <AiOutlineUser className="text-2xl" />
+                  </p>
+                </div>
+              </Link>
+            )}
           </div>
           <div className="hover:text-fuchsia-700 cursor-pointer">
             <AiOutlineHeart className="text-2xl" />

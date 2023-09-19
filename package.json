@@ -5,13 +5,16 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently -k \"npm run server\" \"npm run client\""
   },
   "author": "Shubhangam Saxena",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.40.0",
+    "concurrently": "^8.2.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

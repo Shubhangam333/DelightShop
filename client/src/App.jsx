@@ -1,5 +1,4 @@
 import "./App.css";
-import Header from "./components/Header";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
@@ -10,6 +9,10 @@ import CartPage from "./pages/CartPage";
 import ShippingPage from "./pages/ShippingPage";
 import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/AdminPage";
+import UserProfile from "./components/Profile/Users/UserProfile";
+import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
+import { useDispatch } from "react-redux";
+import { loadUserAsync } from "./features/authSlice";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +50,16 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminPage />,
+  },
+  {
+    path: "profile",
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: "",
+        element: <ProfilePage />,
+      },
+    ],
   },
 ]);
 
