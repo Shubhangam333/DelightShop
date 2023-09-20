@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Import Swiper React components
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,8 +10,20 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 import ProductCard from "./ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProductsAsync } from "../../../features/productSlice";
+import { Link } from "react-router-dom";
 
 const OfferCaraousel = () => {
+  const { products } = useSelector((state) => state.product);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllProductsAsync());
+    console.log(products);
+  }, [dispatch]);
+
   return (
     <>
       <Swiper
@@ -22,30 +34,13 @@ const OfferCaraousel = () => {
         navigation
         slidesPerGroup={4}
       >
-        <SwiperSlide>
-          <ProductCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ProductCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ProductCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ProductCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ProductCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ProductCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ProductCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ProductCard />
-        </SwiperSlide>
+        {products.map((product) => (
+          <SwiperSlide>
+            <Link to={`/product/${product._id}`}>
+              <ProductCard key={product._id} product={product} />
+            </Link>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );

@@ -13,6 +13,8 @@ import UserProfile from "./components/Profile/Users/UserProfile";
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
 import { useDispatch } from "react-redux";
 import { loadUserAsync } from "./features/authSlice";
+import CreateProduct from "./components/Admin/CreateProduct";
+import AddProduct from "./pages/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
     element: <ShoppingPage />,
   },
   {
-    path: "/product",
+    path: "/product/:productId",
     element: <ProductLandingPage />,
   },
   {
@@ -50,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminPage />,
+  },
+  {
+    path: "/AddProduct",
+    element: <AddProduct />,
   },
   {
     path: "profile",

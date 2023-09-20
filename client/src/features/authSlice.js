@@ -40,7 +40,7 @@ export const loginUserAsync = createAsyncThunk(
 );
 export const logoutUserAsync = createAsyncThunk(
   "/user/logoutUser",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await customFetch.get("/logout");
 
@@ -54,7 +54,7 @@ export const logoutUserAsync = createAsyncThunk(
 
 export const loadUserAsync = createAsyncThunk(
   "/user/loadUser",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await customFetch.get("/profile/me");
       localStorage.setItem("user", JSON.stringify(response.data.user));

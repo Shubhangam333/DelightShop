@@ -9,7 +9,7 @@ import { User } from "../models/userModel.js";
 export const isAuthenticated = async (req, res, next) => {
   const { token } = req.cookies;
   if (!token) {
-    throw new UnauthorizedError("You are not allowed to access this resource");
+    throw new UnauthorizedError("Please login to access this resource");
   }
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
