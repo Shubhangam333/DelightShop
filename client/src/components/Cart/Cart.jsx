@@ -1,21 +1,17 @@
 import React from "react";
 import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
+  const { cartItems } = useSelector((state) => state.cart);
+
   return (
-    <div className="mx-24 my-12 grid grid-cols-3">
+    <div className="mx-12 my-12 grid grid-cols-3">
       <div className="col-span-2 py-12">
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        {cartItems.map((item) => (
+          <CartItem item={item} key={item._id} />
+        ))}
       </div>
       <OrderSummary />
     </div>

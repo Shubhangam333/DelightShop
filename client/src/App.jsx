@@ -9,11 +9,7 @@ import CartPage from "./pages/CartPage";
 import ShippingPage from "./pages/ShippingPage";
 import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/AdminPage";
-import UserProfile from "./components/Profile/Users/UserProfile";
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
-import { useDispatch } from "react-redux";
-import { loadUserAsync } from "./features/authSlice";
-import CreateProduct from "./components/Admin/CreateProduct";
 import AddProduct from "./pages/AddProduct";
 
 const router = createBrowserRouter([

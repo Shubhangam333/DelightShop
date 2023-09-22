@@ -3,9 +3,12 @@ import axios from "axios";
 import customFetch from "../utils/customFetch";
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   error: "",
-  products: [],
+  products: localStorage.getItem("products")
+    ? JSON.parse(localStorage.getItem("products"))
+    : null,
+  product: null,
 };
 
 export const createProductAsync = createAsyncThunk(
@@ -27,7 +30,21 @@ export const getAllProductsAsync = createAsyncThunk(
     try {
       const response = await customFetch.get("/getAllProducts");
       console.log(response);
+      localStorage.setItem("products", JSON.stringify(response.data.products));
       return response.data.products;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response?.data?.msg);
+    }
+  }
+);
+export const getProductByIdAsync = createAsyncThunk(
+  "/product/getProductById",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await customFetch.get(`/product/${productId}`);
+      console.log("product", response);
+      return response.data.product;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response?.data?.msg);
@@ -60,6 +77,17 @@ export const productSlice = createSlice({
         state.products = action.payload;
       })
       .addCase(getAllProductsAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getProductByIdAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProductByIdAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.product = action.payload;
+      })
+      .addCase(getProductByIdAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

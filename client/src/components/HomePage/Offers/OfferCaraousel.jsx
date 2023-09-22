@@ -13,9 +13,10 @@ import ProductCard from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductsAsync } from "../../../features/productSlice";
 import { Link } from "react-router-dom";
+import Loader from "../../Loader/Loader";
 
 const OfferCaraousel = () => {
-  const { products } = useSelector((state) => state.product);
+  const { products, isLoading } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
@@ -34,13 +35,17 @@ const OfferCaraousel = () => {
         navigation
         slidesPerGroup={4}
       >
-        {products.map((product) => (
-          <SwiperSlide>
-            <Link to={`/product/${product._id}`}>
-              <ProductCard key={product._id} product={product} />
-            </Link>
-          </SwiperSlide>
-        ))}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          products.map((product) => (
+            <SwiperSlide key={product._id}>
+              <Link to={`/product/${product._id}`}>
+                <ProductCard product={product} />
+              </Link>
+            </SwiperSlide>
+          ))
+        )}
       </Swiper>
     </>
   );

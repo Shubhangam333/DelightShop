@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
   return (
     <header className="font-medium ">
@@ -87,9 +88,12 @@ const Header = () => {
           <div className="hover:text-fuchsia-700 cursor-pointer">
             <AiOutlineHeart className="text-2xl" />
           </div>
-          <div className="px-4 hover:text-fuchsia-700 cursor-pointer">
-            <AiOutlineShoppingCart className="text-2xl" />
-          </div>
+          <Link to="/cart">
+            <div className="px-4 hover:text-fuchsia-700 cursor-pointer bg-red-600 flex justify-between text-white">
+              <AiOutlineShoppingCart className="text-2xl" />
+              <span>{cartItems.length}</span>
+            </div>
+          </Link>
         </div>
       </div>
 

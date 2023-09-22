@@ -2,12 +2,12 @@ import React from "react";
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="bg-white flex items-center justify-between flex-col px-8 py-4 rounded-md cursor-pointer">
-      <div className="wrapper w-44 relative h-full">
+    <div className="bg-white flex items-center justify-between flex-col px-8 py-4 rounded-md cursor-pointer h-full">
+      <div className="wrapper w-full relative h-44">
         <img
           src={product.images[0].url}
           alt=""
-          className="object-cover hover:scale-105 "
+          className="object-contain hover:scale-105 "
         />
         <img
           src="./discount.webp"
@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
         />
       </div>
 
-      <p className="truncate w-full">{product.name}</p>
+      <p className="truncate w-full ">{product.name}</p>
 
       <p className="price">{product.price}</p>
     </div>

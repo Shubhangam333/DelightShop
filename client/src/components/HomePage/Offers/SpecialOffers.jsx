@@ -4,8 +4,7 @@ import OfferCaraousel from "./OfferCaraousel";
 const SpecialOffers = () => {
   return (
     <div
-      className="bg-teal-500 mx-24 overflow-hidden py-8 px-12 rounded-md
-
+      className="bg-teal-500 px-8 overflow-hidden py-8  rounded-md
 "
     >
       <OfferCaraousel />

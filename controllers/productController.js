@@ -57,7 +57,7 @@ export const createProduct = async (req, res, next) => {
  */
 
 export const getProductDetails = async (req, res, next) => {
-  const product = await Product.find(req.params.productId);
+  const product = await Product.findById(req.params.productId);
 
   if (!product) {
     throw new NotFoundError(

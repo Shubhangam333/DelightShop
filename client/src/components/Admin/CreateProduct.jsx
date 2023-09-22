@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { registerUserAsync } from "../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { getAllCategoriesAsync } from "../../features/categorySlice";
 import { createProductAsync } from "../../features/productSlice";
 
 const CreateProduct = () => {
@@ -60,10 +59,6 @@ const CreateProduct = () => {
   const handleCategory = (e) => {
     setCategory(e.target.value);
   };
-
-  useEffect(() => {
-    dispatch(getAllCategoriesAsync());
-  }, [dispatch]);
 
   return (
     <div className="flex items-center justify-center my-8">

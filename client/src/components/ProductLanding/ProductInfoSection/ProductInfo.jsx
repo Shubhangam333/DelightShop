@@ -1,11 +1,18 @@
 import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import {
+  addtoCart,
+  decreaseQuantity,
+  increaseQuantity,
+} from "../../../features/cartSlice";
 
-const ProductInfo = () => {
+const ProductInfo = ({ product }) => {
+  const dispatch = useDispatch();
   return (
     <div className="w-full font-medium">
       <h1 className="text-black text-2xl border-b-2 border-red-400 mb-8 ">
-        XIAOMI Redmi Note 11 - 128 GB, Graphite Gray
+        {product.name}
       </h1>
       <p>3 star</p>
       <h2 className="text-slate-900 font-medium text-xl">Product Details</h2>
@@ -41,18 +48,31 @@ const ProductInfo = () => {
         <div className="flex flex-col gap-4">
           <div className="flex gap-8 text-2xl">
             <p>Product Price</p>
-            <p>2000</p>
+            <p>{product.price}</p>
           </div>
           <div className="flex gap-4 items-center">
-            <button className="text-3xl">-</button>
+            <button
+              className="text-3xl"
+              onClick={() => dispatch(decreaseQuantity(product))}
+            >
+              -
+            </button>
             <input
               type="number"
-              className="w-16 pl-8   border-2 border-slate-700 text-2xl text-slate-600"
-              value="1"
+              className="w-12 pl-4  border-2 border-slate-700 text-2xl text-slate-600"
+              value={product.length}
             />
-            <button className="text-3xl">+</button>
+            <button
+              className="text-3xl"
+              onClick={() => dispatch(increaseQuantity(product))}
+            >
+              +
+            </button>
           </div>
-          <button className="p-2 bg-red-700 opacity-90 text-slate-200 rounded-md w-52 flex justify-center active:scale-95 hover:opacity-100">
+          <button
+            className="p-2 bg-red-700 opacity-90 text-slate-200 rounded-md w-52 flex justify-center active:scale-95 hover:opacity-100"
+            onClick={() => dispatch(addtoCart(product))}
+          >
             <p>Add to cart </p>
             <AiOutlineShoppingCart className="text-2xl" />
           </button>
