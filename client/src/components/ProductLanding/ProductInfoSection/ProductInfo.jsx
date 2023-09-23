@@ -6,6 +6,7 @@ import {
   decreaseQuantity,
   increaseQuantity,
 } from "../../../features/cartSlice";
+import StarRatings from "react-star-ratings";
 
 const ProductInfo = ({ product }) => {
   const dispatch = useDispatch();
@@ -14,7 +15,14 @@ const ProductInfo = ({ product }) => {
       <h1 className="text-black text-2xl border-b-2 border-red-400 mb-8 ">
         {product.name}
       </h1>
-      <p>3 star</p>
+      <p className="mb-4">
+        <StarRatings
+          rating={2.403}
+          starDimension="20px"
+          starSpacing="5px"
+          starRatedColor="yellow"
+        />
+      </p>
       <h2 className="text-slate-900 font-medium text-xl">Product Details</h2>
       <div className="flex flex-col justify-between gap-3">
         <div className="details flex ">

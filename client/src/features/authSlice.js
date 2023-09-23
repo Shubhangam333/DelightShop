@@ -60,6 +60,7 @@ export const loadUserAsync = createAsyncThunk(
       localStorage.setItem("user", JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
+      localStorage.setItem("user", null);
       return rejectWithValue(error.response?.data?.msg);
     }
   }
@@ -110,12 +111,14 @@ export const authSlice = createSlice({
       })
       .addCase(loadUserAsync.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isAuthenticated = teue;
+        state.isAuthenticated = true;
         state.userInfo = action.payload.user;
       })
       .addCase(loadUserAsync.rejected, (state, action) => {
         state.isLoading = false;
+        state.isAuthenticated = false;
         state.error = action.payload;
+        state.userInfo = null;
       });
   },
 });

@@ -6,11 +6,14 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { HiOutlineLogin } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUserAsync } from "../features/authSlice";
 
 const Header = () => {
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
 
   return (
     <header className="font-medium ">
@@ -22,9 +25,11 @@ const Header = () => {
       </div>
       <div className="flex items-center justify-between p-4 fixed top-0 left-0 right-0 z-10  bg-white">
         <nav className="flex items-center justify-between gap-8">
-          <h1 className="text-2xl text-cyan-950">
-            Delight <span className="text-fuchsia-700">Shop</span>
-          </h1>
+          <Link to="/">
+            <h1 className="text-2xl text-cyan-950">
+              Delight <span className="text-fuchsia-700">Shop</span>
+            </h1>
+          </Link>
           <ul className="flex items-center justify-between gap-8 text-slate-950 ">
             <li className="hover:text-fuchsia-700 ">
               <Link to="/">Men</Link>
@@ -94,6 +99,14 @@ const Header = () => {
               <span>{cartItems.length}</span>
             </div>
           </Link>
+          {isAuthenticated && (
+            <button
+              className="bg-red-600 text-white px-2"
+              onClick={() => dispatch(logoutUserAsync())}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
 

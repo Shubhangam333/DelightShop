@@ -5,6 +5,7 @@ import {
   getAllProducts,
   getProductDetails,
   updateProduct,
+  createProductReview,
 } from "../controllers/productController.js";
 import { isAdmin, isAuthenticated } from "../middleware/authMiddleware.js";
 
@@ -14,6 +15,8 @@ router.post("/createProduct", isAuthenticated, isAdmin, createProduct);
 router.get("/product/:productId", getProductDetails);
 router.put("/product/:productId", isAuthenticated, isAdmin, updateProduct);
 router.delete("/product/:productId", isAuthenticated, isAdmin, deleteProduct);
-router.get("/getAllProducts", isAuthenticated, isAdmin, getAllProducts);
+router.get("/getAllProducts", getAllProducts);
+
+router.route("/review").put(isAuthenticated, createProductReview);
 
 export default router;

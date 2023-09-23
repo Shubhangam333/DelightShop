@@ -9,6 +9,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("products"))
     : null,
   product: null,
+  message: "",
 };
 
 export const createProductAsync = createAsyncThunk(
@@ -16,10 +17,9 @@ export const createProductAsync = createAsyncThunk(
   async (productData, { rejectWithValue }) => {
     try {
       const response = await axios.post(`/api/v1/createProduct`, productData);
-      console.log(response);
+
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.response?.data?.msg);
     }
   }
@@ -29,11 +29,10 @@ export const getAllProductsAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await customFetch.get("/getAllProducts");
-      console.log(response);
+
       localStorage.setItem("products", JSON.stringify(response.data.products));
       return response.data.products;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.response?.data?.msg);
     }
   }
@@ -43,10 +42,22 @@ export const getProductByIdAsync = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       const response = await customFetch.get(`/product/${productId}`);
-      console.log("product", response);
+
       return response.data.product;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error.response?.data?.msg);
+    }
+  }
+);
+export const createProductReviewAsync = createAsyncThunk(
+  "/product/createProductReview",
+  async (reviewData, { rejectWithValue }) => {
+    try {
+      const response = await customFetch.put(`/review`, reviewData);
+      console.log(response.data.msg);
+      return response.data.msg;
+    } catch (error) {
+      console.log(error.response?.data?.msg);
       return rejectWithValue(error.response?.data?.msg);
     }
   }
@@ -88,6 +99,17 @@ export const productSlice = createSlice({
         state.product = action.payload;
       })
       .addCase(getProductByIdAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(createProductReviewAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createProductReviewAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload;
+      })
+      .addCase(createProductReviewAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

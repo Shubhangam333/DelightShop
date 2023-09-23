@@ -11,6 +11,9 @@ import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/AdminPage";
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
 import AddProduct from "./pages/AddProduct";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { loadUserAsync } from "./features/authSlice";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +69,10 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUserAsync());
+  }, [dispatch]);
   return <RouterProvider router={router} />;
 }
 
