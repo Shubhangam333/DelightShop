@@ -17,7 +17,7 @@ const ProductInfo = ({ product }) => {
       </h1>
       <p className="mb-4">
         <StarRatings
-          rating={2.403}
+          rating={product.ratings}
           starDimension="20px"
           starSpacing="5px"
           starRatedColor="yellow"

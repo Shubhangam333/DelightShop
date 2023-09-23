@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createProductReview } from "../../../../../controllers/productController";
 import { toast } from "react-toastify";
+import { createProductReviewAsync } from "../../../features/productSlice";
 
 const ratings = [
   { rate: "1", name: "Very Poor - 1" },
@@ -19,7 +19,13 @@ const CreateProductReview = ({ product }) => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createProductReview({ productrating, productreview }))
+    dispatch(
+      createProductReviewAsync({
+        rating: productrating,
+        comment: productreview,
+        productId: product._id,
+      })
+    )
       .unwrap()
       .then((res) => {
         toast.success(res);

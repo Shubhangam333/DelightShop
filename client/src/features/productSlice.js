@@ -57,7 +57,7 @@ export const createProductReviewAsync = createAsyncThunk(
       console.log(response.data.msg);
       return response.data.msg;
     } catch (error) {
-      console.log(error.response?.data?.msg);
+      console.log(error);
       return rejectWithValue(error.response?.data?.msg);
     }
   }
