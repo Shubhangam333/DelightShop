@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import customFetch from "../utils/customFetch";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const initialState = {
   isLoading: false,

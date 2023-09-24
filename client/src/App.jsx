@@ -8,12 +8,14 @@ import ProductLandingPage from "./pages/ProductLandingPage";
 import CartPage from "./pages/CartPage";
 import ShippingPage from "./pages/ShippingPage";
 import ProfilePage from "./pages/ProfilePage";
-import AdminPage from "./pages/AdminPage";
+
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
-import AddProduct from "./pages/AddProduct";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { loadUserAsync } from "./features/authSlice";
+import AdminRoute from "./components/ProtectedRoute/AdminRoute";
+import CreateProduct from "./pages/AdminPages/CreateProduct";
+import AllProducts from "./pages/AdminPages/AllProducts";
 
 const router = createBrowserRouter([
   {
@@ -49,20 +51,30 @@ const router = createBrowserRouter([
     element: <ProfilePage />,
   },
   {
-    path: "/admin",
-    element: <AdminPage />,
-  },
-  {
-    path: "/AddProduct",
-    element: <AddProduct />,
-  },
-  {
     path: "profile",
     element: <PrivateRoute />,
     children: [
       {
         path: "",
         element: <ProfilePage />,
+      },
+      {
+        path: "profile/editProfile",
+        element: <ProfilePage />,
+      },
+    ],
+  },
+  {
+    path: "admin",
+    element: <AdminRoute />,
+    children: [
+      {
+        path: "create-product",
+        element: <CreateProduct />,
+      },
+      {
+        path: "products",
+        element: <AllProducts />,
       },
     ],
   },

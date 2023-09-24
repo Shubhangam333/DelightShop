@@ -31,9 +31,7 @@ const ProductReview = ({ product }) => {
           </div>
         ))
       ) : (
-        <h2 className=" px-12 border-red-700 border-4 p-4 ">
-          No reviews found for this product
-        </h2>
+        <h2 className=" px-12 border-red-700 border-4 p-4 ">No reviews yet</h2>
       )}
     </>
   );

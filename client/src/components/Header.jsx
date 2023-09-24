@@ -8,6 +8,8 @@ import {
 import { HiOutlineLogin } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserAsync } from "../features/authSlice";
+import UserDropDown from "./DropDown/UserDropDown";
+import AdminDropDown from "./DropDown/AdminDropDown";
 
 const Header = () => {
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
@@ -33,15 +35,6 @@ const Header = () => {
           <ul className="flex items-center justify-between gap-8 text-slate-950 ">
             <li className="hover:text-fuchsia-700 ">
               <Link to="/">Men</Link>
-            </li>
-            <li className="hover:text-fuchsia-700">
-              <Link to="/">Women</Link>
-            </li>
-            <li className="hover:text-fuchsia-700">
-              <Link to="/">Kids</Link>
-            </li>
-            <li className="hover:text-fuchsia-700">
-              <Link to="/">Home & Living</Link>
             </li>
           </ul>
         </nav>
@@ -69,6 +62,9 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-8">
+          <div className="hover:text-fuchsia-700 cursor-pointer">
+            <AiOutlineHeart className="text-2xl" />
+          </div>
           <div>
             {!isAuthenticated ? (
               <Link to="/login" className="cursor-pointer">
@@ -79,29 +75,24 @@ const Header = () => {
                 </div>
               </Link>
             ) : (
-              <Link to="/login" className="cursor-pointer">
-                <div className="hover:text-fuchsia-700 flex items-center">
-                  {" "}
-                  <p>
-                    {" "}
-                    <AiOutlineUser className="text-2xl" />
-                  </p>
-                </div>
-              </Link>
+              <UserDropDown />
             )}
           </div>
-          <div className="hover:text-fuchsia-700 cursor-pointer">
-            <AiOutlineHeart className="text-2xl" />
+          <div>
+            {isAuthenticated && userInfo && userInfo.role === "admin" && (
+              <AdminDropDown />
+            )}
           </div>
           <Link to="/cart">
-            <div className="px-4 hover:text-fuchsia-700 cursor-pointer bg-red-600 flex justify-between text-white">
+            <div className="px-4 py-2 rounded-md hover:text-fuchsia-700 cursor-pointer bg-red-500 flex justify-between text-white">
               <AiOutlineShoppingCart className="text-2xl" />
               <span>{cartItems.length}</span>
             </div>
           </Link>
+
           {isAuthenticated && (
             <button
-              className="bg-red-600 text-white px-2"
+              className="bg-red-500 text-white px-4 py-2 rounded-md"
               onClick={() => dispatch(logoutUserAsync())}
             >
               Logout
