@@ -6,6 +6,8 @@ import errorHandleMiddleware from "./middleware/errorMiddleware.js";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 import { v2 as cloudinary } from "cloudinary";
 import morgan from "morgan";
 import fileUpload from "express-fileupload";
@@ -41,6 +43,8 @@ cloudinary.config({
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", categoryRoutes);
 app.use("/api/v1", productRoutes);
+app.use("/api/v1", paymentRoutes);
+app.use("/api/v1", orderRoutes);
 
 app.use(errorHandleMiddleware);
 

@@ -46,19 +46,22 @@ const AdminDropDown = () => {
                 </button>
               </Menu.Item>
             </Link>
-
-            <Menu.Item className="hover:bg-red-500 text-black w-full rounded-md  my-2">
-              <button className="flex items-center gap-2 px-2 py-1 hover:text-white">
-                <FaUsers className="" />
-                <span className="text-md"> Users</span>
-              </button>
-            </Menu.Item>
-            <Menu.Item className="hover:bg-red-500 text-black w-full rounded-md  my-2">
-              <button className="flex items-center gap-2 px-2 py-1 hover:text-white">
-                <AiOutlineShop className="" />
-                <span className="text-md"> Orders</span>
-              </button>
-            </Menu.Item>
+            <Link to="/admin/users">
+              <Menu.Item className="hover:bg-red-500 text-black w-full rounded-md  my-2">
+                <button className="flex items-center gap-2 px-2 py-1 hover:text-white">
+                  <FaUsers className="" />
+                  <span className="text-md"> Users</span>
+                </button>
+              </Menu.Item>
+            </Link>
+            <Link to="/admin/orders">
+              <Menu.Item className="hover:bg-red-500 text-black w-full rounded-md  my-2">
+                <button className="flex items-center gap-2 px-2 py-1 hover:text-white">
+                  <AiOutlineShop className="" />
+                  <span className="text-md"> Orders</span>
+                </button>
+              </Menu.Item>
+            </Link>
           </div>
         </Menu.Items>
       </Transition>

@@ -16,6 +16,14 @@ import { loadUserAsync } from "./features/authSlice";
 import AdminRoute from "./components/ProtectedRoute/AdminRoute";
 import CreateProduct from "./pages/AdminPages/CreateProduct";
 import AllProducts from "./pages/AdminPages/AllProducts";
+import EditProductsPage from "./pages/AdminPages/EditProductsPage";
+import Users from "./pages/AdminPages/Users";
+import PaymentRoute from "./pages/PaymentRoute";
+import EditUserProfile from "./pages/AdminPages/EditUserProfile";
+import CheckoutPage from "./pages/CheckoutPage";
+import { Success } from "./components/Payment/Success";
+import Cancel from "./components/Payment/Cancel";
+import AllOrders from "./pages/AdminPages/AllOrders";
 
 const router = createBrowserRouter([
   {
@@ -59,8 +67,24 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
-        path: "profile/editProfile",
+        path: "editProfile",
         element: <ProfilePage />,
+      },
+      {
+        path: "checkout",
+        element: <CheckoutPage />,
+      },
+      {
+        path: "payment",
+        element: <PaymentRoute />,
+      },
+      {
+        path: "success",
+        element: <Success />,
+      },
+      {
+        path: "cancel",
+        element: <Cancel />,
       },
     ],
   },
@@ -76,12 +100,29 @@ const router = createBrowserRouter([
         path: "products",
         element: <AllProducts />,
       },
+      {
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "edit-user/:userId",
+        element: <EditUserProfile />,
+      },
+      {
+        path: "edit-product/:productId",
+        element: <EditProductsPage />,
+      },
+      {
+        path: "orders",
+        element: <AllOrders />,
+      },
     ],
   },
 ]);
 
 function App() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(loadUserAsync());
   }, [dispatch]);

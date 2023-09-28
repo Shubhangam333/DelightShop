@@ -12,6 +12,7 @@ const Products = () => {
       {isLoading ? (
         <Loader />
       ) : (
+        products.length > 0 &&
         products.slice(0, 4).map((product) => <ProductCard product={product} />)
       )}
     </div>

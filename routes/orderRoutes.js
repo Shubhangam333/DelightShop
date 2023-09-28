@@ -1,4 +1,4 @@
-import { isAuthenticated, isAdmin } from "../middleware/authMiddleware";
+import { isAuthenticated, isAdmin } from "../middleware/authMiddleware.js";
 import {
   newOrder,
   getSingleOrder,
@@ -6,7 +6,7 @@ import {
   getAllOrders,
   updateOrder,
   deleteOrder,
-} from "../controllers/orderController";
+} from "../controllers/orderController.js";
 
 import express from "express";
 
@@ -24,3 +24,5 @@ router
   .route("/admin/order/:id")
   .put(isAuthenticated, isAdmin, updateOrder)
   .delete(isAuthenticated, isAdmin, deleteOrder);
+
+export default router;

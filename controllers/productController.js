@@ -72,7 +72,7 @@ export const getProductDetails = async (req, res, next) => {
 };
 
 export const updateProduct = async (req, res, next) => {
-  let product = await Product.findById(req.params.id);
+  let product = await Product.findById(req.params.productId);
 
   if (!product) {
     throw new NotFoundError(
@@ -110,7 +110,7 @@ export const updateProduct = async (req, res, next) => {
     req.body.images = imagesLinks;
   }
 
-  product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+  product = await Product.findByIdAndUpdate(req.params.productId, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
@@ -123,7 +123,8 @@ export const updateProduct = async (req, res, next) => {
 };
 
 export const deleteProduct = async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+  console.log(req.params.productId);
+  const product = await Product.findById(req.params.productId);
 
   if (!product) {
     throw new NotFoundError(
@@ -136,7 +137,7 @@ export const deleteProduct = async (req, res, next) => {
     await cloudinary.uploader.destroy(product.images[i].public_id);
   }
 
-  await product.remove();
+  await product.deleteOne();
 
   res.status(200).json({
     success: true,
@@ -156,7 +157,7 @@ export const getAllProducts = async (req, res, next) => {
   let queryStr = JSON.stringify(queryObj);
   queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-  let query = Product.find(JSON.parse(queryStr));
+  let query = Product.find(JSON.parse(queryStr)).populate("category", "-__v");
 
   // Sorting
 
@@ -240,5 +241,17 @@ export const createProductReview = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json({
     success: true,
     msg: "Review Created Successfully",
+  });
+};
+
+export const getAllAdminProducts = async (req, res, next) => {
+  const products = await Product.find().populate("category");
+  if (!products) {
+    throw new NotFoundError(`No Products Found`);
+  }
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    products,
   });
 };

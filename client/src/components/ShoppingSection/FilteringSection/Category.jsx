@@ -7,7 +7,6 @@ import Loader from "../../Loader/Loader";
 
 const Category = () => {
   const { categories, isLoading } = useSelector((state) => state.category);
-  console.log("categories", categories);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllCategoriesAsync());

@@ -68,7 +68,7 @@ const ProductInfo = ({ product }) => {
             <input
               type="number"
               className="w-12 pl-4  border-2 border-slate-700 text-2xl text-slate-600"
-              value={product.length}
+              value={product.quantity}
             />
             <button
               className="text-3xl"

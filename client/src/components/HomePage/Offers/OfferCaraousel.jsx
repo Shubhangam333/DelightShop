@@ -38,6 +38,7 @@ const OfferCaraousel = () => {
         {isLoading ? (
           <Loader />
         ) : (
+          products &&
           products.map((product) => (
             <SwiperSlide key={product._id}>
               <Link to={`/product/${product._id}`}>

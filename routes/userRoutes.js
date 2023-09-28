@@ -30,7 +30,7 @@ router.route("/profile/me").get(isAuthenticated, getUserProfileDetails);
 router
   .route("/user/:userId")
   .get(isAuthenticated, isAdmin, getSingleUserDetails);
-router.get("/getAllUsers", isAuthenticated, isAdmin, getAllUsers);
+router.get("/admin/users", isAuthenticated, isAdmin, getAllUsers);
 router.put("/block-user/:userId", isAuthenticated, isAdmin, blockUser);
 router.put("/unblock-user/:userId", isAuthenticated, isAdmin, unblockUser);
 router.delete("/delete-user/:userId", isAuthenticated, isAdmin, deleteUser);

@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
   return (
-    <div className="flex items-center  gap-3 border-b-2 border-red-500">
+    <div className="flex items-center my-8 gap-3 border-b-2 border-red-500">
       <div className="w-24">
         <img src={item.images[0].url} alt="" className="w-100 object-cover" />
       </div>
