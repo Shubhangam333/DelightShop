@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   return (
     <div className="flex flex-col  w-60 shadow-xl relative py-4 gap-2  items-stretch">
       <Link to={`/product/${product._id}`}>
-        <div className="w-full bg-slate-300 ">
+        <div className="w-full bg-slate-300 h-44">
           <img
             src={product.images[0].url}
             alt=""
@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
           />
         </div>
       </Link>
-      <p>
+      <p className="flex justify-between">
         {" "}
         <StarRatings
           rating={product.ratings}
@@ -28,6 +28,7 @@ const ProductCard = ({ product }) => {
           starSpacing="5px"
           starRatedColor="yellow"
         />
+        <span>{product.numOfReviews} review</span>
       </p>
       <p className="truncate w-full ">{product.name}</p>
       <div className="flex items-center justify-between w-full">

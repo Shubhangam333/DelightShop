@@ -4,21 +4,61 @@ import { setPriceFilter } from "../../../features/filterSlice";
 
 const Price = () => {
   const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    dispatch(setPriceFilter(e.target.value));
+  };
   return (
     <div>
-      <h1 className="flex items-center justify-center text-xl font-bold p-4">
-        Price
-      </h1>
-      <select
-        name="pricefilter"
-        id="pricefilter"
-        onChange={(e) => dispatch(setPriceFilter(e.target.value))}
-      >
-        <option value="10000">Below 10000</option>
-        <option value="30000">Between 10000 to 30000</option>
-        <option value="50000">Between 30000 to 50000</option>
-        <option value="100000">Between 50000 to 100000</option>
-      </select>
+      <h1 className="flex  text-xl font-bold my-2">Price</h1>
+      <div className="flex gap-2 p-t-2">
+        <input
+          type="radio"
+          id="p1"
+          value="20000"
+          name="category"
+          onChange={handleChange}
+        />
+        <label htmlFor="p1" className="text-sm">
+          Above 20000
+        </label>
+      </div>
+      <div className="flex gap-2 p-t-2">
+        <input
+          type="radio"
+          id="p2"
+          value="40000"
+          name="category"
+          onChange={handleChange}
+        />
+        <label htmlFor="p2" className="text-sm">
+          Above 40000
+        </label>
+      </div>
+      <div className="flex gap-2 p-t-2">
+        <input
+          type="radio"
+          id="p4"
+          value="80000"
+          name="category"
+          onChange={handleChange}
+        />
+        <label htmlFor="p4" className="text-sm">
+          Above 80000
+        </label>
+      </div>
+      <div className="flex gap-2 p-t-2">
+        <input
+          type="radio"
+          id="p5"
+          value="100000"
+          name="category"
+          onChange={handleChange}
+        />
+        <label htmlFor="p5" className="text-sm">
+          Above 100000
+        </label>
+      </div>
     </div>
   );
 };

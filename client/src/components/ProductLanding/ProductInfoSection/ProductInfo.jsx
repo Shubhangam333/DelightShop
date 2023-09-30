@@ -25,7 +25,7 @@ const ProductInfo = ({ product }) => {
       </p>
       <h2 className="text-slate-900 font-medium text-xl">Product Details</h2>
       <div className="flex flex-col justify-between gap-3">
-        <div className="details flex ">
+        {/* <div className="details flex ">
           <h5 className="text-slate-600">Battery:</h5>
           <p>5000 mAh</p>
         </div>
@@ -40,8 +40,9 @@ const ProductInfo = ({ product }) => {
         <div className="details flex ">
           <h5 className="text-slate-600">Operating System :</h5>
           <p>Android 11</p>
-        </div>
-        <div className="details flex ">
+        </div> */}
+
+        {/* <div className="details flex ">
           <h5 className="text-slate-600">Main Camera :</h5>
           <p> Quad 50 MP / 8 MP / 2 MP / 2 MP main cameras</p>
         </div>
@@ -52,7 +53,8 @@ const ProductInfo = ({ product }) => {
         <div className="details flex ">
           <h5 className="text-slate-600">Front Camera :</h5>
           <p>13 MP front camera</p>
-        </div>
+        </div> */}
+        {product.description}
         <div className="flex flex-col gap-4">
           <div className="flex gap-8 text-2xl">
             <p>Product Price</p>

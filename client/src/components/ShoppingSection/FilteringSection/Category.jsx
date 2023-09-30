@@ -13,7 +13,7 @@ const Category = () => {
   }, [dispatch]);
   return (
     <div>
-      <h1 className="flex items-center justify-center text-xl font-bold p-4">
+      <h1 className="flex text-xl font-bold text-left items-center mb-2">
         <BiCategoryAlt />
         Categories
       </h1>

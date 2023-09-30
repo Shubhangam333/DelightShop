@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUserAsync } from "../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -28,6 +28,8 @@ const Register = () => {
       setImage(reader.result);
     };
   };
+
+  const Navigate = useNavigate();
 
   useEffect(() => {
     toast.error(error);

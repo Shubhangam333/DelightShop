@@ -6,11 +6,14 @@ const filterSlice = createSlice({
     price: 0,
     rating: 0,
     discount: 0,
-    category: [],
+    category: 0,
+    isCategorySelected: false,
+    isPriceSelected: false,
   },
   reducers: {
     setPriceFilter: (state, action) => {
       state.price = Math.max(0, action.payload);
+      state.isPriceSelected = true;
     },
 
     setRatingFilter: (state, action) => {
@@ -22,21 +25,18 @@ const filterSlice = createSlice({
     },
 
     setCategoryFilter: (state, action) => {
-      console.log(action.payload);
-      state.category = [...state.category, action.payload];
+      state.category = action.payload;
+      state.isCategorySelected = true;
     },
   },
 });
-
-export const actions = {
-  ...filterSlice.actions,
-};
 
 export const {
   setPriceFilter,
   setRatingFilter,
   setDiscountFilter,
   setCategoryFilter,
+  filterProducts,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

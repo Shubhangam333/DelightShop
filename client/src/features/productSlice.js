@@ -10,6 +10,9 @@ const initialState = {
     : null,
   product: null,
   message: "",
+  filteredproducts: localStorage.getItem("filteredproducts")
+    ? JSON.parse(localStorage.getItem("filteredproducts"))
+    : null,
 };
 
 export const createProductAsync = createAsyncThunk(
@@ -31,6 +34,44 @@ export const getAllProductsAsync = createAsyncThunk(
       const response = await customFetch.get("/getAllProducts");
 
       localStorage.setItem("products", JSON.stringify(response.data.products));
+      return response.data.products;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.msg);
+    }
+  }
+);
+
+export const getFilteredProductsAsync = createAsyncThunk(
+  "/product/getFilteredProduct",
+  async (categoryId, { rejectWithValue }) => {
+    try {
+      const response = await customFetch.get(
+        `/getAllProducts?category=${categoryId}`
+      );
+      localStorage.setItem(
+        "filteredproducts",
+        JSON.stringify(response.data.products)
+      );
+
+      return response.data.products;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.msg);
+    }
+  }
+);
+
+export const getFilteredProductByPriceAsync = createAsyncThunk(
+  "/product/getFilteredProductByPrice",
+  async (price, { rejectWithValue }) => {
+    try {
+      const response = await customFetch.get(
+        `/getAllProducts?price[gte]=${price}`
+      );
+      localStorage.setItem(
+        "filteredproducts",
+        JSON.stringify(response.data.products)
+      );
+
       return response.data.products;
     } catch (error) {
       return rejectWithValue(error.response?.data?.msg);
@@ -110,6 +151,28 @@ export const productSlice = createSlice({
         state.message = action.payload;
       })
       .addCase(createProductReviewAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getFilteredProductsAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getFilteredProductsAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.filteredproducts = action.payload;
+      })
+      .addCase(getFilteredProductsAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getFilteredProductByPriceAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getFilteredProductByPriceAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.filteredproducts = action.payload;
+      })
+      .addCase(getFilteredProductByPriceAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
