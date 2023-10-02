@@ -1,15 +1,12 @@
-import { AiOutlineShoppingCart, AiOutlineHeart } from "react-icons/ai";
-import { BsCurrencyRupee } from "react-icons/bs";
-import { useDispatch } from "react-redux";
-import { addtoCart } from "../../../features/cartSlice";
 import { Link } from "react-router-dom";
 import StarRatings from "react-star-ratings";
+import { addtoCart } from "../../features/cartSlice";
+import { BsCurrencyRupee } from "react-icons/bs";
+import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 
-const ProductCard = ({ product }) => {
-  const dispatch = useDispatch();
-
+const ShoppingProductCard = ({ product }) => {
   return (
-    <div className="flex flex-col  w-60 shadow-xl relative py-4 gap-2  items-stretch">
+    <div className="flex flex-col  w-60  shadow-xl relative py-4  gap-2">
       <Link to={`/product/${product._id}`}>
         <div className="w-full bg-slate-300 h-44">
           <img
@@ -47,4 +44,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default ShoppingProductCard;

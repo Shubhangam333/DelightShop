@@ -1,13 +1,16 @@
-import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUserAsync } from "../../features/authSlice";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
+  const handleSuccess = () => {
+    Navigate("/");
+  };
   return (
     <div className="w-96">
       <h1 className="text-3xl text-slate-950 py-4">Sign In to your account</h1>
@@ -32,9 +35,10 @@ const Login = () => {
             })
           )
             .unwrap()
-            .then((res) => {
+            .then(() => {
               toast.success("Login Successful");
               resetForm();
+              handleSuccess();
             })
             .catch((error) => {
               console.log(error);
@@ -77,7 +81,7 @@ const Login = () => {
         </Form>
       </Formik>
       <p className="flex justify-between">
-        Don't you have an account?{" "}
+        <span>Dont you have an account?</span>
         <Link to="/register" className="text-red-500 hover:underline">
           Sign Up
         </Link>

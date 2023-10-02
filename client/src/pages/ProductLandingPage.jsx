@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Layout from "../components/Layout";
 import ProductLanding from "../components/ProductLanding/ProductLanding";
 import { useParams } from "react-router-dom";
@@ -14,8 +14,9 @@ const ProductLandingPage = () => {
   const { productId } = params;
 
   useEffect(() => {
+    window.scroll(0, 0);
     dispatch(getProductByIdAsync(productId));
-  }, [dispatch]);
+  }, [productId, dispatch]);
 
   return (
     <Layout>

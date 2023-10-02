@@ -24,6 +24,8 @@ import CheckoutPage from "./pages/CheckoutPage";
 import { Success } from "./components/Payment/Success";
 import Cancel from "./components/Payment/Cancel";
 import AllOrders from "./pages/AdminPages/AllOrders";
+import { getAllCategoriesAsync } from "./features/categorySlice";
+import OrderPage from "./pages/User/OrderPage";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "editProfile",
         element: <ProfilePage />,
+      },
+      {
+        path: "orders",
+        element: <OrderPage />,
       },
       {
         path: "checkout",
@@ -125,6 +131,7 @@ function App() {
 
   useEffect(() => {
     dispatch(loadUserAsync());
+    dispatch(getAllCategoriesAsync());
   }, [dispatch]);
   return <RouterProvider router={router} />;
 }

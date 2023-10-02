@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isPending } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import customFetch from "../utils/customFetch";
 
 const initialState = {
@@ -103,7 +103,7 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(deleteAdminProductsAsync.pending, (state, action) => {
+      .addCase(deleteAdminProductsAsync.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(deleteAdminProductsAsync.fulfilled, (state, action) => {
@@ -114,7 +114,7 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(getAllAdminUsersAsync.pending, (state, action) => {
+      .addCase(getAllAdminUsersAsync.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getAllAdminUsersAsync.fulfilled, (state, action) => {
@@ -125,7 +125,7 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(deleteAdminUsersAsync.pending, (state, action) => {
+      .addCase(deleteAdminUsersAsync.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(deleteAdminUsersAsync.fulfilled, (state, action) => {
@@ -136,7 +136,7 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(getAdminUserByIdAsync.pending, (state, action) => {
+      .addCase(getAdminUserByIdAsync.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getAdminUserByIdAsync.fulfilled, (state, action) => {
@@ -147,7 +147,7 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(getAllAdminOrdersAsync.pending, (state, action) => {
+      .addCase(getAllAdminOrdersAsync.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getAllAdminOrdersAsync.fulfilled, (state, action) => {

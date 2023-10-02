@@ -1,12 +1,11 @@
-import React from "react";
-import Category from "./Category";
-import Price from "./Price";
+import DropDown from "./DropDown";
+import SearchBar from "./SearchBar";
 
 const Filter = () => {
   return (
-    <div className="p-2 col-span-1">
-      <Category />
-      <Price />
+    <div className="sm:flex sm:flex-row sm:items-center sm:justify-between flex flex-col gap-4 basis-full px-12">
+      <SearchBar />
+      <DropDown />
     </div>
   );
 };

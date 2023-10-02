@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../features/cartSlice";
@@ -49,7 +49,7 @@ export const Success = () => {
         dispatch(clearCart());
       });
     }
-  }, [dispatch]);
+  }, [dispatch, getPaymentInformation]);
   return (
     <>
       <h2>Thanks for your order!</h2>

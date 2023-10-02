@@ -7,8 +7,10 @@ const filterSlice = createSlice({
     rating: 0,
     discount: 0,
     category: 0,
+    keyword: "",
     isCategorySelected: false,
     isPriceSelected: false,
+    isSearchSelected: false,
   },
   reducers: {
     setPriceFilter: (state, action) => {
@@ -27,6 +29,16 @@ const filterSlice = createSlice({
     setCategoryFilter: (state, action) => {
       state.category = action.payload;
       state.isCategorySelected = true;
+      state.isSearchSelected = false;
+    },
+    setSearchFilter: (state, action) => {
+      state.keyword = action.payload;
+      state.isSearchSelected = true;
+      state.isCategorySelected = false;
+    },
+    removeFilters: (state) => {
+      state.isSearchSelected = false;
+      state.isCategorySelected = false;
     },
   },
 });
@@ -37,6 +49,8 @@ export const {
   setDiscountFilter,
   setCategoryFilter,
   filterProducts,
+  setSearchFilter,
+  removeFilters,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

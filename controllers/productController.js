@@ -151,53 +151,66 @@ export const deleteProduct = async (req, res, next) => {
 
 export const getAllProducts = async (req, res, next) => {
   // Filtering
-  const queryObj = { ...req.query };
-  const excludeFields = ["page", "sort", "limit", "fields"];
-  excludeFields.forEach((el) => delete queryObj[el]);
-  let queryStr = JSON.stringify(queryObj);
-  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-  let query = Product.find(JSON.parse(queryStr)).populate("category", "-__v");
-
-  // Sorting
-
-  if (req.query.sort) {
-    const sortBy = req.query.sort.split(",").join(" ");
-    query = query.sort(sortBy);
+  if (req.query.q) {
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: req.query.q, $options: "i" } }, // Case-insensitive search
+      ],
+    });
+    res.status(StatusCodes.CREATED).json({
+      success: true,
+      products,
+    });
   } else {
-    query = query.sort("-createdAt");
+    const queryObj = { ...req.query };
+    const excludeFields = ["page", "sort", "limit", "fields"];
+    excludeFields.forEach((el) => delete queryObj[el]);
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    let query = Product.find(JSON.parse(queryStr)).populate("category", "-__v");
+
+    // Sorting
+
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    // limiting the fields
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      query = query.select(fields);
+    } else {
+      query = query.select("-__v");
+    }
+
+    // pagination
+
+    const page = req.query.page;
+    const limit = req.query.limit;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(limit);
+    if (req.query.page) {
+      const productCount = await Product.countDocuments();
+      if (skip >= productCount)
+        throw new NotFoundError("This Page does not exists");
+    }
+    const products = await query;
+
+    if (!products) {
+      throw new NotFoundError(`No Products Found`);
+    }
+
+    res.status(StatusCodes.CREATED).json({
+      success: true,
+      products,
+    });
   }
-
-  // limiting the fields
-
-  if (req.query.fields) {
-    const fields = req.query.fields.split(",").join(" ");
-    query = query.select(fields);
-  } else {
-    query = query.select("-__v");
-  }
-
-  // pagination
-
-  const page = req.query.page;
-  const limit = req.query.limit;
-  const skip = (page - 1) * limit;
-  query = query.skip(skip).limit(limit);
-  if (req.query.page) {
-    const productCount = await Product.countDocuments();
-    if (skip >= productCount)
-      throw new NotFoundError("This Page does not exists");
-  }
-  const products = await query;
-
-  if (!products) {
-    throw new NotFoundError(`No Products Found`);
-  }
-
-  res.status(StatusCodes.CREATED).json({
-    success: true,
-    products,
-  });
 };
 
 export const createProductReview = async (req, res, next) => {

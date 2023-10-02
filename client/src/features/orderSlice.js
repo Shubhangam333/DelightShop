@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import cartSlice from "./cartSlice";
 
 const initialState = {
   isLoading: false,
@@ -9,6 +8,9 @@ const initialState = {
   message: "",
   orderItems: localStorage.getItem("orderItems")
     ? JSON.parse(localStorage.getItem("orderItems"))
+    : [],
+  UserOrders: localStorage.getItem("userorders")
+    ? JSON.parse(localStorage.getItem("userorders"))
     : [],
 };
 
@@ -20,6 +22,19 @@ export const createOrderAsync = createAsyncThunk(
       console.log(response);
       return response.data;
     } catch (error) {
+      return rejectWithValue(error.response?.data?.msg);
+    }
+  }
+);
+export const getOrderDetailsAsync = createAsyncThunk(
+  "/order/getOrderDetail",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/orders/me");
+      localStorage.setItem("userorders", JSON.stringify(response.data.orders));
+      return response.data.orders;
+    } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response?.data?.msg);
     }
   }
@@ -57,6 +72,17 @@ export const orderSlice = createSlice({
         state.message = action.payload;
       })
       .addCase(createOrderAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getOrderDetailsAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOrderDetailsAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.UserOrders = action.payload;
+      })
+      .addCase(getOrderDetailsAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

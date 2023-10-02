@@ -1,63 +1,103 @@
-import React, { useEffect } from "react";
-import Category from "./FilteringSection/Category";
-import ProductCard from "../HomePage/LatestGoods/ProductCard";
+import { useCallback, useEffect, useState } from "react";
 import Filter from "./FilteringSection/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
+  getAllPaginatedProductsAsync,
+  getFilteredProductByKeyowrdAsync,
   getFilteredProductByPriceAsync,
   getFilteredProductsAsync,
 } from "../../features/productSlice";
+import ShoppingProductCard from "./ShoppingProductCard";
+import Pagination from "../Pagination/Pagination";
+import { removeFilters } from "../../features/filterSlice";
 
 const ShoppingContainer = () => {
   const { products, isLoading, filteredproducts } = useSelector(
     (state) => state.product
   );
+
+  const [Products, setProducts] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+
   const {
-    price,
-    rating,
-    discount,
     category,
     isCategorySelected,
-    isPriceSelected,
+
+    isSearchSelected,
+    keyword,
   } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
-  const Navigate = useNavigate();
+
+  const getProducts = useCallback(
+    async (page) => {
+      const res = await dispatch(getAllPaginatedProductsAsync(page));
+      setProducts(res.payload);
+    },
+    [dispatch]
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    dispatch(removeFilters());
+    getProducts(page);
+  };
 
   useEffect(() => {
+    getProducts(1);
+
+    if (isSearchSelected) {
+      dispatch(getFilteredProductByKeyowrdAsync(keyword));
+    }
+
     if (isCategorySelected) {
       dispatch(getFilteredProductsAsync(category));
     }
 
-    if (isPriceSelected) {
-      dispatch(getFilteredProductByPriceAsync(price));
-    }
-  }, [isCategorySelected, category, isPriceSelected, price]);
+    // if (isPriceSelected) {
+    //   dispatch(getFilteredProductByPriceAsync(price));
+    // }
+  }, [
+    isCategorySelected,
+    category,
+    dispatch,
+    isSearchSelected,
+    keyword,
+    getProducts,
+  ]);
 
   return (
-    <div className="grid grid-cols-5">
+    <div className=" flex flex-wrap gap-4  ">
       <Filter />
-      <div className="col-span-4 flex flex-wrap gap-4">
-        {isCategorySelected || isPriceSelected ? (
+      <div className="flex flex-wrap gap-4 px-16">
+        {isCategorySelected || isSearchSelected ? (
           isLoading ? (
             <Loader />
           ) : (
             filteredproducts &&
             filteredproducts.map((product) => (
               <Link to={`/product/${product._id}`} key={product._id}>
-                <ProductCard product={product} />
+                <ShoppingProductCard product={product} />
               </Link>
             ))
           )
         ) : (
-          products &&
-          products.map((product) => (
+          Products &&
+          Products.map((product) => (
             <Link to={`/product/${product._id}`} key={product._id}>
-              <ProductCard product={product} />
+              <ShoppingProductCard product={product} />
             </Link>
           ))
         )}
+      </div>
+      <div className="flex items-center justify-center w-full">
+        <Pagination
+          totalPages={Math.ceil(products.length / 3)}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

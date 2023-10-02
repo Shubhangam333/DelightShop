@@ -18,7 +18,7 @@ router.post(
   validateCategoryInput,
   createCategory
 );
-router.get("/category", isAuthenticated, isAdmin, getAllCategories);
+router.get("/category", getAllCategories);
 router.get(
   "/category/:categoryId",
   isAuthenticated,

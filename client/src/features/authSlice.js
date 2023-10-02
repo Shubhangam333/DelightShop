@@ -56,6 +56,7 @@ export const loadUserAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await customFetch.get("/profile/me");
+
       localStorage.setItem("user", JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
@@ -74,7 +75,7 @@ export const authSlice = createSlice({
       .addCase(registerUserAsync.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerUserAsync.fulfilled, (state, action) => {
+      .addCase(registerUserAsync.fulfilled, (state) => {
         state.isLoading = false;
         state.isAuthenticated = true;
       })
@@ -97,7 +98,7 @@ export const authSlice = createSlice({
       .addCase(logoutUserAsync.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(logoutUserAsync.fulfilled, (state, action) => {
+      .addCase(logoutUserAsync.fulfilled, (state) => {
         state.isLoading = false;
         state.isAuthenticated = false;
       })

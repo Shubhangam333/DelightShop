@@ -1,4 +1,3 @@
-import React from "react";
 import {
   AiFillInstagram,
   AiFillLinkedin,
@@ -8,7 +7,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="my-16 absolute ">
+    <footer className="footer">
       <div className="border-y-2 border-y-slate-400  border-solid p-12 px-24 text-slate-700">
         <div className="grid grid-cols-3 mx-24 gap-48 ">
           <div className="section flex flex-col gap-2 items-start">

@@ -22,7 +22,6 @@ const OfferCaraousel = () => {
 
   useEffect(() => {
     dispatch(getAllProductsAsync());
-    console.log(products);
   }, [dispatch]);
 
   return (

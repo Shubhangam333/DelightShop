@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
 import ProductCard from "./ProductCard";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsAsync } from "../../../features/productSlice";
+import { useSelector } from "react-redux";
+
 import Loader from "../../Loader/Loader";
-import { Link } from "react-router-dom";
 
 const Products = () => {
   const { products, isLoading } = useSelector((state) => state.product);
@@ -12,8 +10,11 @@ const Products = () => {
       {isLoading ? (
         <Loader />
       ) : (
+        products &&
         products.length > 0 &&
-        products.slice(0, 4).map((product) => <ProductCard product={product} />)
+        products
+          .slice(0, 4)
+          .map((product) => <ProductCard product={product} key={product._id} />)
       )}
     </div>
   );

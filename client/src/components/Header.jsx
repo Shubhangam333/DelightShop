@@ -1,10 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import {
-  AiOutlineShoppingCart,
-  AiOutlineHeart,
-  AiOutlineUser,
-} from "react-icons/ai";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { HiOutlineLogin } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserAsync } from "../features/authSlice";
@@ -18,14 +13,14 @@ const Header = () => {
   const dispatch = useDispatch();
 
   return (
-    <header className="font-medium ">
+    <header className="font-medium z-10 header">
       <div className="bg-cyan-950 h-8 flex items-center justify-center ">
         <p className="text-gray-50 text-xs">
           <i className="fa-solid fa-truck p-2"></i>
           <span className="">Get free delivery on orders above 1000</span>
         </p>
       </div>
-      <div className="flex items-center justify-between p-4 fixed top-0 left-0 right-0 z-10  bg-white">
+      <div className="flex items-center justify-between p-4   bg-white">
         <nav className="flex items-center justify-between gap-8">
           <Link to="/">
             <h1 className="text-2xl text-cyan-950">
@@ -34,7 +29,7 @@ const Header = () => {
           </Link>
           <ul className="flex items-center justify-between gap-8 text-slate-950 ">
             <li className="hover:text-fuchsia-700 ">
-              <Link to="/">Men</Link>
+              <Link to="/shopping">Shop</Link>
             </li>
           </ul>
         </nav>
@@ -63,7 +58,7 @@ const Header = () => {
 
         <div className="flex items-center gap-8">
           <div className="hover:text-fuchsia-700 cursor-pointer">
-            <AiOutlineHeart className="text-2xl" />
+            {/* <AiOutlineHeart className="text-2xl" /> */}
           </div>
           <div>
             {!isAuthenticated ? (

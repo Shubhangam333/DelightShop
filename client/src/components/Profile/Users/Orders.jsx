@@ -1,18 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAdminOrdersAsync } from "../../../features/adminSlice";
+
 import Loader from "../../Loader/Loader";
-import OrderComponent from "./OrderComponent";
+
+import OrderDetailsComponent from "./OrderDetailsComponent";
+import { getOrderDetailsAsync } from "../../../features/orderSlice";
 
 const Orders = () => {
-  const { AdminOrders } = useSelector((state) => state.admin);
+  const { UserOrders } = useSelector((state) => state.order);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllAdminOrdersAsync());
+    dispatch(getOrderDetailsAsync());
   }, [dispatch]);
-
   return (
     <div className="flex flex-col">
       <h1 className="text-2xl mb-2">Orders</h1>
@@ -25,15 +26,14 @@ const Orders = () => {
             <th>Order Status</th>
             <th>Paid At</th>
             <th>Payment ID</th>
-            <th className="col-span-2">Actions</th>
           </tr>
         </thead>
         <tbody className="">
-          {!AdminOrders ? (
+          {!UserOrders ? (
             <Loader className="text-center" />
           ) : (
-            AdminOrders.map((order) => (
-              <OrderComponent order={order} key={order._id} />
+            UserOrders.map((order) => (
+              <OrderDetailsComponent order={order} key={order._id} />
             ))
           )}
         </tbody>

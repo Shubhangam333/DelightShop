@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
@@ -31,9 +31,13 @@ const Register = () => {
 
   const Navigate = useNavigate();
 
+  const handleSuccess = () => {
+    Navigate("/");
+  };
+
   useEffect(() => {
     toast.error(error);
-  }, [error, toast]);
+  }, [error]);
 
   return (
     <div className="w-96">
@@ -64,9 +68,10 @@ const Register = () => {
             })
           )
             .unwrap()
-            .then((res) => {
+            .then(() => {
               aRef.current.value = null;
               resetForm();
+              handleSuccess();
             })
             .catch((error) => {
               console.log(error);
