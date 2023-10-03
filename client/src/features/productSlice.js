@@ -10,12 +10,11 @@ const initialState = {
     : null,
   product: null,
   message: "",
-  filteredproducts: localStorage.getItem("filteredproducts")
-    ? JSON.parse(localStorage.getItem("filteredproducts"))
-    : null,
   paginatedProducts: localStorage.getItem("paginatedproducts")
     ? JSON.parse(localStorage.getItem("paginatedproducts"))
     : null,
+  isPaginatedLoading: false,
+  productCount: 0,
 };
 
 export const createProductAsync = createAsyncThunk(
@@ -46,72 +45,33 @@ export const getAllProductsAsync = createAsyncThunk(
 
 export const getAllPaginatedProductsAsync = createAsyncThunk(
   "/product/getAllPaginatedProducts",
-  async (page, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await customFetch.get(
-        `/getAllProducts?page=${page}&limit=3`
-      );
+      let response;
+      const { page, categoryId, keyword } = data;
 
+      if (categoryId !== 0 && categoryId !== "All" && keyword !== "") {
+        response = await customFetch.get(
+          `/getAllProducts?category=${categoryId}&page=${page}&limit=3&q=${keyword}`
+        );
+      } else if (categoryId !== 0 && categoryId !== "All") {
+        response = await customFetch.get(
+          `/getAllProducts?category=${categoryId}&page=${page}&limit=3`
+        );
+      } else if (keyword !== "") {
+        response = await customFetch.get(
+          `/getAllProducts?q=${keyword}&page=${page}&limit=3`
+        );
+      } else {
+        response = await customFetch.get(
+          `/getAllProducts?page=${page}&limit=3`
+        );
+      }
       localStorage.setItem(
         "paginatedproducts",
         JSON.stringify(response.data.products)
       );
-      return response.data.products;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.msg);
-    }
-  }
-);
-
-export const getFilteredProductsAsync = createAsyncThunk(
-  "/product/getFilteredProduct",
-  async (categoryId, { rejectWithValue }) => {
-    try {
-      const response = await customFetch.get(
-        `/getAllProducts?category=${categoryId}`
-      );
-      localStorage.setItem(
-        "filteredproducts",
-        JSON.stringify(response.data.products)
-      );
-
-      return response.data.products;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.msg);
-    }
-  }
-);
-
-export const getFilteredProductByPriceAsync = createAsyncThunk(
-  "/product/getFilteredProductByPrice",
-  async (price, { rejectWithValue }) => {
-    try {
-      const response = await customFetch.get(
-        `/getAllProducts?price[gte]=${price}`
-      );
-      localStorage.setItem(
-        "filteredproducts",
-        JSON.stringify(response.data.products)
-      );
-
-      return response.data.products;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.msg);
-    }
-  }
-);
-
-export const getFilteredProductByKeyowrdAsync = createAsyncThunk(
-  "/product/getFilteredProductByKeyword",
-  async (keyword, { rejectWithValue }) => {
-    try {
-      const response = await customFetch.get(`/getAllProducts?q=${keyword}`);
-      localStorage.setItem(
-        "filteredproducts",
-        JSON.stringify(response.data.products)
-      );
-
-      return response.data.products;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.msg);
     }
@@ -194,49 +154,18 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(getFilteredProductsAsync.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getFilteredProductsAsync.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.filteredproducts = action.payload;
-      })
-      .addCase(getFilteredProductsAsync.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(getFilteredProductByPriceAsync.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getFilteredProductByPriceAsync.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.filteredproducts = action.payload;
-      })
-      .addCase(getFilteredProductByPriceAsync.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(getFilteredProductByKeyowrdAsync.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getFilteredProductByKeyowrdAsync.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.filteredproducts = action.payload;
-      })
-      .addCase(getFilteredProductByKeyowrdAsync.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
       .addCase(getAllPaginatedProductsAsync.pending, (state) => {
-        state.isLoading = true;
+        state.isPaginatedLoading = true;
       })
       .addCase(getAllPaginatedProductsAsync.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.paginatedProducts = action.payload;
+        state.isPaginatedLoading = false;
+        state.paginatedProducts = action.payload.products;
+        state.productCount = action.payload.productCount;
       })
       .addCase(getAllPaginatedProductsAsync.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isPaginatedLoading = false;
         state.error = action.payload;
+        state.productCount = 0;
       });
   },
 });

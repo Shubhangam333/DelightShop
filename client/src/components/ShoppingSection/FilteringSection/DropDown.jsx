@@ -24,6 +24,9 @@ const DropDown = () => {
       <option value="" className="p-8 hidden">
         Filter By Category
       </option>
+      <option value="All" className="p-8 ">
+        All
+      </option>
       {categories &&
         categories.map((category) => (
           <option value={category._id} className="p-8" key={category._id}>

@@ -3,8 +3,10 @@ import StarRatings from "react-star-ratings";
 import { addtoCart } from "../../features/cartSlice";
 import { BsCurrencyRupee } from "react-icons/bs";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 
 const ShoppingProductCard = ({ product }) => {
+  const dispatch = useDispatch();
   return (
     <div className="flex flex-col  w-60  shadow-xl relative py-4  gap-2">
       <Link to={`/product/${product._id}`}>
