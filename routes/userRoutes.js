@@ -9,6 +9,8 @@ import {
   register,
   unblockUser,
   logout,
+  updateProfile,
+  updatePassword,
 } from "../controllers/userController.js";
 
 import { isAdmin, isAuthenticated } from "../middleware/authMiddleware.js";
@@ -23,6 +25,8 @@ router.post("/register", validateRegisterInput, register);
 router.post("/login", validateLoginInput, login);
 router.get("/logout", logout);
 router.route("/profile/me").get(isAuthenticated, getUserProfileDetails);
+router.route("/profile/edit-profile").put(isAuthenticated, updateProfile);
+router.route("/profile/edit-password").put(isAuthenticated, updatePassword);
 
 /**
  * !Admin Routes

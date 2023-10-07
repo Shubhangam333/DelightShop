@@ -26,6 +26,8 @@ import Cancel from "./components/Payment/Cancel";
 import AllOrders from "./pages/AdminPages/AllOrders";
 import { getAllCategoriesAsync } from "./features/categorySlice";
 import OrderPage from "./pages/User/OrderPage";
+import EditProfilePage from "./pages/User/EditProfilePage";
+import EditProfilePassword from "./pages/User/EditProfilePassword";
 
 const router = createBrowserRouter([
   {
@@ -70,7 +72,11 @@ const router = createBrowserRouter([
       },
       {
         path: "editProfile",
-        element: <ProfilePage />,
+        element: <EditProfilePage />,
+      },
+      {
+        path: "editPassword",
+        element: <EditProfilePassword />,
       },
       {
         path: "orders",
@@ -131,6 +137,7 @@ function App() {
 
   useEffect(() => {
     dispatch(loadUserAsync());
+
     dispatch(getAllCategoriesAsync());
   }, [dispatch]);
   return <RouterProvider router={router} />;

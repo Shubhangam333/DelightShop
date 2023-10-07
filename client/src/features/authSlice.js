@@ -66,10 +66,45 @@ export const loadUserAsync = createAsyncThunk(
   }
 );
 
+export const updateUserAsync = createAsyncThunk(
+  "/user/updateUser",
+  async (formdata, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        "/api/v1/profile/edit-profile",
+        formdata
+      );
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.msg);
+    }
+  }
+);
+export const updateUserPasswordAsync = createAsyncThunk(
+  "/user/updateUserPassword",
+  async (formdata, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        "/api/v1/profile/edit-password",
+        formdata
+      );
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.msg);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    clearErrors: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUserAsync.pending, (state) => {
@@ -119,8 +154,32 @@ export const authSlice = createSlice({
         state.isAuthenticated = false;
         state.error = action.payload;
         state.userInfo = null;
+      })
+      .addCase(updateUserAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userInfo = action.payload.user;
+      })
+      .addCase(updateUserAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateUserPasswordAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserPasswordAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userInfo = action.payload.user;
+      })
+      .addCase(updateUserPasswordAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });
+
+export const { clearErrors } = authSlice.actions;
 
 export default authSlice.reducer;

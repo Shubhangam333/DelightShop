@@ -163,11 +163,7 @@ export const getAllProducts = async (req, res, next) => {
   if (req.query.q) {
     query = query
       .find({
-        $or: [
-          {
-            name: { $regex: req.query.q, $options: "i" },
-          },
-        ],
+        name: { $regex: req.query.q, $options: "i" },
       })
       .populate("category", "-__v");
   }

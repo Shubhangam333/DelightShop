@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { getAllPaginatedProductsAsync } from "../../features/productSlice";
 import ShoppingProductCard from "./ShoppingProductCard";
 import Pagination from "../Pagination/Pagination";
+import Sorting from "./FilteringSection/Sorting";
 
 const ShoppingContainer = () => {
   const { productCount, isPaginatedLoading, paginatedProducts } = useSelector(
@@ -14,17 +15,22 @@ const ShoppingContainer = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { category, keyword } = useSelector((state) => state.filter);
+  const { category, keyword, sort } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
   const getProducts = useCallback(
     async (page) => {
       dispatch(
-        getAllPaginatedProductsAsync({ page, categoryId: category, keyword })
+        getAllPaginatedProductsAsync({
+          page,
+          categoryId: category,
+          keyword,
+          sort,
+        })
       );
       setCurrentPage(page);
     },
-    [dispatch, category, keyword]
+    [dispatch, category, keyword, sort]
   );
 
   const handlePageChange = (page) => {
@@ -40,6 +46,7 @@ const ShoppingContainer = () => {
   return (
     <div className=" flex flex-wrap gap-4 ">
       <Filter />
+      <Sorting />
       <div className="flex flex-wrap gap-4 px-16  h-96">
         {isPaginatedLoading ? (
           <Loader />
@@ -54,7 +61,7 @@ const ShoppingContainer = () => {
       </div>
       <div className="flex items-center justify-center w-full">
         <Pagination
-          totalPages={Math.ceil(productCount / 3)}
+          totalPages={Math.ceil(productCount / 4)}
           currentPage={currentPage}
           onPageChange={handlePageChange}
         />

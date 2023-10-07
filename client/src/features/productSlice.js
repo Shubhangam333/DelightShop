@@ -48,23 +48,23 @@ export const getAllPaginatedProductsAsync = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       let response;
-      const { page, categoryId, keyword } = data;
+      const { page, categoryId, keyword, sort } = data;
 
       if (categoryId !== 0 && categoryId !== "All" && keyword !== "") {
         response = await customFetch.get(
-          `/getAllProducts?category=${categoryId}&page=${page}&limit=3&q=${keyword}`
+          `/getAllProducts?category=${categoryId}&page=${page}&limit=4&q=${keyword}&sort=${sort}`
         );
       } else if (categoryId !== 0 && categoryId !== "All") {
         response = await customFetch.get(
-          `/getAllProducts?category=${categoryId}&page=${page}&limit=3`
+          `/getAllProducts?category=${categoryId}&page=${page}&limit=4&sort=${sort}`
         );
       } else if (keyword !== "") {
         response = await customFetch.get(
-          `/getAllProducts?q=${keyword}&page=${page}&limit=3`
+          `/getAllProducts?q=${keyword}&page=${page}&limit=4&sort=${sort}`
         );
       } else {
         response = await customFetch.get(
-          `/getAllProducts?page=${page}&limit=3`
+          `/getAllProducts?page=${page}&limit=4&sort=${sort}`
         );
       }
       localStorage.setItem(

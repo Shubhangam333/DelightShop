@@ -1,9 +1,8 @@
-import React from "react";
 import { CirclesWithBar } from "react-loader-spinner";
 
 const Loader = () => {
   return (
-    <div className="flex items-center justify-center m-12">
+    <div className="flex items-center justify-center m-12 w-full">
       <CirclesWithBar
         height="100"
         width="100"

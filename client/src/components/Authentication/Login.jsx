@@ -2,8 +2,9 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginUserAsync } from "../../features/authSlice";
-import { useDispatch } from "react-redux";
+import { clearErrors, loginUserAsync } from "../../features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,11 @@ const Login = () => {
   const handleSuccess = () => {
     Navigate("/");
   };
+  const { error } = useSelector((state) => state.auth);
+  useEffect(() => {
+    toast.error(error);
+    dispatch(clearErrors());
+  }, [error, dispatch]);
   return (
     <div className="w-96">
       <h1 className="text-3xl text-slate-950 py-4">Sign In to your account</h1>

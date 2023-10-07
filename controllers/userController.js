@@ -93,6 +93,65 @@ export const getUserProfileDetails = async (req, res, next) => {
   res.status(StatusCodes.OK).json({ success: "true", user });
 };
 
+// Update User Profile
+
+export const updateProfile = async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  if (req.body.avatar !== "") {
+    const user = await User.findById(req.user.id);
+
+    const imageId = user.avatar.public_id;
+
+    await cloudinary.uploader.destroy(imageId);
+
+    const myCloud = await cloudinary.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    newUserData.avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  }
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    user,
+  });
+};
+
+export const updatePassword = async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+  if (!isPasswordMatched) {
+    throw new UnauthorizedError("Old password is incorrect");
+  }
+
+  if (req.body.newPassword !== req.body.confirmPassword) {
+    throw new UnauthorizedError("password does not match");
+  }
+
+  user.password = req.body.newPassword;
+
+  await user.save();
+
+  sendToken(user, res);
+};
+
 /**
  * ! Admin Controllers
  */

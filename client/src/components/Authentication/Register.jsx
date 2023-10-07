@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUserAsync } from "../../features/authSlice";
+import { clearErrors, registerUserAsync } from "../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -37,7 +37,8 @@ const Register = () => {
 
   useEffect(() => {
     toast.error(error);
-  }, [error]);
+    dispatch(clearErrors());
+  }, [error, dispatch]);
 
   return (
     <div className="w-96">

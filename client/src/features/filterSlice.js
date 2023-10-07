@@ -5,7 +5,7 @@ const filterSlice = createSlice({
   initialState: {
     price: 0,
     rating: 0,
-    discount: 0,
+    sort: "",
     category: 0,
     keyword: "",
   },
@@ -19,19 +19,15 @@ const filterSlice = createSlice({
       state.rating = Math.max(0, action.payload);
     },
 
-    setDiscountFilter: (state, action) => {
-      state.discount = Math.max(0, action.payload);
-    },
-
     setCategoryFilter: (state, action) => {
       state.category = action.payload;
     },
     setSearchFilter: (state, action) => {
       state.keyword = action.payload;
     },
-    removeFilters: (state) => {
-      state.isSearchSelected = false;
-      state.isCategorySelected = false;
+    setSortFilter: (state, action) => {
+      state.sort = action.payload;
+      console.log(state.sort);
     },
   },
 });
@@ -43,7 +39,7 @@ export const {
   setCategoryFilter,
   filterProducts,
   setSearchFilter,
-  removeFilters,
+  setSortFilter,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
