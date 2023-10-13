@@ -65,13 +65,15 @@ const AdminUsers = () => {
           )}
         </tbody>
       </table>
-      <div className="flex items-center justify-center w-full">
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center w-full">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   );
 };

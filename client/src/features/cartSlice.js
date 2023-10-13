@@ -46,6 +46,7 @@ const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.cartItems = [];
+      localStorage.removeItem("cartItems");
     },
     saveShippingInfo: (state, action) => {
       state.shippingInfo = action.payload;

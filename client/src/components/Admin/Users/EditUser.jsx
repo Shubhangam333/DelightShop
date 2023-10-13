@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { Link, useParams } from "react-router-dom";
+
+import { useParams } from "react-router-dom";
 import { getAdminUserByIdAsync } from "../../../features/adminSlice";
 
 const EditUser = () => {
@@ -15,7 +15,7 @@ const EditUser = () => {
 
   useEffect(() => {
     dispatch(getAdminUserByIdAsync(userId));
-  }, [dispatch]);
+  }, [dispatch, userId]);
   return (
     <>
       {AdminUser && (

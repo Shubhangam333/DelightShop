@@ -21,40 +21,18 @@ const Header = () => {
         </p>
       </div>
       <div className="flex items-center justify-between p-4   bg-white">
-        <nav className="flex items-center justify-between gap-8">
+        <nav className="flex items-center  gap-8">
           <Link to="/">
             <h1 className="text-2xl text-cyan-950">
               Delight <span className="text-fuchsia-700">Shop</span>
             </h1>
           </Link>
-          <ul className="flex items-center justify-between gap-8 text-slate-950 ">
-            <li className="hover:text-fuchsia-700 ">
-              <Link to="/shopping">Shop</Link>
-            </li>
-          </ul>
         </nav>
-        <div className="max-w-md mx-auto">
-          <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white ">
-            <div className="grid place-items-center h-full w-12 text-gray-400">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-
-            <input
-              className="peer h-full w-full outline-none text-sm text-slate-950 pr-2"
-              type="text"
-              id="search"
-              placeholder="What are you looking for ?"
-            />
-          </div>
-        </div>
+        <ul className="flex items-center justify-between gap-8 text-slate-950 ">
+          <li className="hover:text-fuchsia-700 text-xl">
+            <Link to="/shopping">Shop</Link>
+          </li>
+        </ul>
 
         <div className="flex items-center gap-8">
           <div className="hover:text-fuchsia-700 cursor-pointer">
