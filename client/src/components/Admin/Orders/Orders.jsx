@@ -1,16 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllAdminOrdersAsync } from "../../../features/adminSlice";
 import Loader from "../../Loader/Loader";
 import OrderComponent from "./OrderComponent";
+import Pagination from "../../Pagination/Pagination";
 
 const Orders = () => {
   const { AdminOrders } = useSelector((state) => state.admin);
 
   const dispatch = useDispatch();
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const ordersPerPage = 7;
+
+  const indexofLastElement = currentPage * ordersPerPage;
+  const indexofFirstElement = indexofLastElement - ordersPerPage;
+
+  const visibleOrders =
+    AdminOrders && AdminOrders.slice(indexofFirstElement, indexofLastElement);
+
   useEffect(() => {
-    dispatch(getAllAdminOrdersAsync());
+    dispatch(getAllAdminOrdersAsync())
+      .unwrap()
+      .then((res) => {
+        console.log("res", res);
+        setTotalPages(Math.ceil(res.length / ordersPerPage));
+      });
   }, [dispatch]);
 
   return (
@@ -32,12 +52,21 @@ const Orders = () => {
           {!AdminOrders ? (
             <Loader className="text-center" />
           ) : (
-            AdminOrders.map((order) => (
+            visibleOrders.map((order) => (
               <OrderComponent order={order} key={order._id} />
             ))
           )}
         </tbody>
       </table>
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center w-full">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   );
 };
