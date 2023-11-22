@@ -5,7 +5,7 @@ import Products from "./Products";
 const Latest = () => {
   return (
     <div className="flex flex-col items-center justify-between">
-      <h1 className="text-center text-2xl">Latest Goods</h1>
+      <h1 className="text-center text-3xl">Latest Goods</h1>
       <Products />
       <Link to="/shopping">
         {" "}

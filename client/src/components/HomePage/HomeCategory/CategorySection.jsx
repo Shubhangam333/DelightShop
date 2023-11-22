@@ -1,15 +1,12 @@
-import React from "react";
 import CategoryCard from "./CategoryCard";
+import Categories from "./Category";
 
 const CategorySection = () => {
   return (
-    <div className="w-full grid grid-cols-3 gap-8">
-      <CategoryCard />
-      <CategoryCard />
-      <CategoryCard />
-      <CategoryCard />
-      <CategoryCard />
-      <CategoryCard />
+    <div className="category-grid ">
+      {Categories.map((cat) => (
+        <CategoryCard key={Math.floor(Math.random() * 100)} cat={cat} />
+      ))}
     </div>
   );
 };

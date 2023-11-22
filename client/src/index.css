@@ -58,3 +58,20 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+/* grid css */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+.item-1 {
+  grid-row: span 2;
+  grid-column: span 2;
+}
+.item-3 {
+  grid-column: span 2;
+}
+.item-4 {
+  grid-column: span 2;
+}
