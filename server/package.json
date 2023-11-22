@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "server": "nodemon server.js",
-    "client": "npm run dev --prefix client",
+    "client": "npm run dev --prefix ../client",
     "dev": "concurrently -k \"npm run server\" \"npm run client\""
   },
   "author": "Shubhangam Saxena",
