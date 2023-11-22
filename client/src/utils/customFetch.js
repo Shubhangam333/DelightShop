@@ -4,7 +4,7 @@ const config = {
   withCredentials: true,
 };
 const customFetch = axios.create({
-  baseURL: "/api/v1",
+  baseURL: "https://delight-shop-eta.vercel.app",
   config,
 });
 
