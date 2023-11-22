@@ -1,10 +1,10 @@
 import axios from "axios";
 const config = {
   headers: { "Content-Type": "application/json" },
-  // withCredentials: true,
+  withCredentials: true,
 };
 const customFetch = axios.create({
-  baseURL: "/api/v1",
+  baseURL: "https://delight-shop-eta.vercel.app",
   config,
 });
 

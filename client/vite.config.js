@@ -10,7 +10,6 @@ export default defineConfig({
         // target: "http://127.0.0.1:5000",
         target: "https://delight-shop-eta.vercel.app",
         changeOrigin: true,
-        secure: false,
       },
     },
   },
