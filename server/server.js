@@ -31,7 +31,7 @@ app.use(fileUpload());
 
 app.use(
   cors({
-    origin: "https://delight-shop-client.vercel.app",
+    origin: "*",
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })

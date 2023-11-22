@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api/v1": {
+      "/api": {
         // target: "http://127.0.0.1:5000",
         target: "https://delight-shop-eta.vercel.app",
         changeOrigin: true,
