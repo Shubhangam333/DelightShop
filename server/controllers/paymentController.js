@@ -9,6 +9,13 @@ import { StatusCodes } from "http-status-codes";
 
 export const processPayment = async (req, res, next) => {
   const { cartItems } = req.body;
+  let baseURL = "";
+
+  if (process.env.NODE_ENV === "development") {
+    baseURL = process.env.DEV_BASE_URL;
+  } else {
+    baseURL = process.env.PROD_BASE_URL;
+  }
 
   const lineItems = cartItems.map((product) => ({
     price_data: {
@@ -25,9 +32,8 @@ export const processPayment = async (req, res, next) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url:
-      "http://localhost:5173/profile/success?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url: "http://localhost:5173/profile/cancel",
+    success_url: `${baseURL}/profile/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseURL}/profile/cancel`,
   });
   res.status(StatusCodes.OK).json({ id: session.id });
 };
