@@ -31,7 +31,7 @@ app.use(fileUpload());
 
 app.use(
   cors({
-    origin: "*",
+    origin: "https://delight-shop-client.onrender.com",
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
